@@ -40,7 +40,7 @@ client.attemptLogin(function(err, data){
 		printNotice('Successfully logged in');
 		var account_id = data.account_id;
 		var account = new kazoo.Account(account_id, client);
-
+/*
 		account.getUsers(function(err, data){
 			printNotice('Fetching Users');
 			if (err) {
@@ -80,6 +80,17 @@ client.attemptLogin(function(err, data){
 				printError('Error fetching devices');
 				console.log(err);
 			}
+			if (data) {
+				console.log(data);
+			}
+		});
+*/
+		account.createUser({data: {email: 'evan@mailstrap.com', username: 'evan@mailstrap.com', first_name: 'Evan', last_name: 'Lucas'}}, function(err, data) {
+			printNotice('Creating user');
+			if (err) {
+				console.log(err);
+			}
+			
 			if (data) {
 				console.log(data);
 			}
