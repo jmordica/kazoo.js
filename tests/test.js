@@ -1,27 +1,33 @@
-
+/*
+ *	Filename: helper.php
+ *	Author: Evan Lucas
+ *	Copyright: 2012-2013 5060
+ *	Description: Simple test file for kazoo.js
+ *
+ *  This file is part of kazoo.js.
+ *
+ *  kazoo.js is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  kazoo.js is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with kazoo.js.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 var kazoo = require('../lib/kazoo.js'),
 	fs = require('fs'),
-	clc = require('cli-color'),
 	pkg = require('../package.json');
-
-var error = clc.red.bold,
-	warn = clc.yellow.bold,
-	notice = clc.cyan.bold;
-
-function printError(err) {
-	console.log(error('[ERROR] :: '+err));
-}
-function printWarning(warn) {
-	console.log(warn('[WARNING] :: '+warn));
-}
-function printNotice(note) {
-	console.log(notice('[NOTICE] :: '+note));
-}
 
 var config;
 if (!fs.existsSync('./config.js')) {
-	printError('config.js does not exist');
-	printError('Please copy config-sample.js to config.js and fill in the correct values');
+	console.log('config.js does not exist');
+	console.log('Please copy config-sample.js to config.js and fill in the correct values');
 	process.exit();
 } else {
 	config = require('./config');
@@ -29,21 +35,21 @@ if (!fs.existsSync('./config.js')) {
 
 var client = kazoo.createClient(config);
 client.attemptLogin(function(err, data){
-	printNotice('Attempting Login');
+	console.log('Attempting login');
 	if (err) {
-		printError('Error logging in');
+		console.log('Error logging in');
 		console.log(err);
 		process.exit();
 	}
 	
 	if (data) {
-		printNotice('Successfully logged in');
+		console.log('Successfully logged in');
 		var account_id = data.account_id;
 		var account = new kazoo.Account(account_id, client);
 		account.getUsers(function(err, data){
-			printNotice('Fetching Users');
+			console.log('Fetching users');
 			if (err) {
-				printError('Error fetching users');
+				console.log('Error fetching users');
 				console.log(err);
 			}
 			if (data) {
@@ -52,9 +58,9 @@ client.attemptLogin(function(err, data){
 		});
 		
 		account.getAccount(function(err, data){
-			printNotice('Fetching account');
+			console.log('Fetching account');
 			if (err) {
-				printError('Error fetching account');
+					console.log('Error fetching account');
 				console.log(err);
 			}
 			if (data) {
@@ -63,9 +69,9 @@ client.attemptLogin(function(err, data){
 		});
 		
 		account.getMedia(function(err, data){
-			printNotice('Fetching media');
+			console.log('Fetching media');
 			if (err) {
-				printError('Error fetching media');
+				console.log('Error fetching media');
 				console.log(err);
 			}
 			if (data) {
@@ -74,9 +80,9 @@ client.attemptLogin(function(err, data){
 		});
 		
 		account.getDevices(function(err, data){
-			printNotice('Fetching devices');
+			console.log('Fetching devices');
 			if (err) {
-				printError('Error fetching devices');
+				console.log('Error fetching devices');
 				console.log(err);
 			}
 			if (data) {
